@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      body {
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #222;
+        color: white;
+      }
+      h1 {
+        margin-top: 50px;
+      }
+      #result {
+        font-size: 24px;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+      button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: darkred;
+      }
+    </style>
+    <h1>Russian Roulette</h1>
+    <p>Tap "Shoot" to start</p>
+    <img src="https://media.tenor.com/b9ZGuiiFZMoAAAAj/gun-shoot.gif" alt="" />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <button onclick="russianRoulette()">SHOOT!</button>
+    <p id="result"></p>
+
+    <audio id="shot" src="sounds/shot.mp3"></audio>
+    <audio id="click" src="sounds/click.mp3"></audio>
+
+    <script>
+      function russianRoulette() {
+        let chambers = [false, false, false, false, false, true];
+        chambers = chambers.sort(() => Math.random() - 0.5);
+
+        let shot = Math.floor(Math.random() * chambers.length);
+        let resultText = chambers[shot];
+
+        if (resultText) {
+          document
+            .getElementById('shot')
+            .play()
+            .catch((error) => console.log(error));
+          document.getElementById('result').innerText = '💥!You lose...';
+        } else {
+          document.getElementById('click').play();
+          document.getElementById('result').innerText = "...?❤You're alive...";
+        }
+
+        setTimeout(() => {
+          document.getElementById('result').innerText = '';
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
